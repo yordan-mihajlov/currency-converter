@@ -1,6 +1,29 @@
+<mat-drawer-container class="example-container" autosize [hasBackdrop]="true">
+    <mat-drawer #drawer class="example-sidenav" mode="over">
+        <a routerLink="/currency-converter" (click)="drawer.toggle()">currency-converter</a>
+        <br>
+        <a routerLink="/currency-exchange-rate" (click)="drawer.toggle()">currency-exchange-rate</a>
+    </mat-drawer>
 
-<a routerLink="/currency-converter">currency-converter</a>
-<br>
-<a routerLink="/currency-exchange-rate">currency-exchange-rate</a>
+    <div class="example-sidenav-content">
+        <mat-toolbar color="primary">
+            <mat-toolbar-row>
+                <button mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span>Title</span>
+                <span class="example-spacer"></span>
+                <button mat-icon-button>
+                    <mat-icon class="example-icon">favorite</mat-icon>
+                </button>
+                <button mat-icon-button>
+                    <mat-icon class="example-icon">delete</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
 
-<router-outlet></router-outlet>
+        <main>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</mat-drawer-container>
