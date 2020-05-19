@@ -4,7 +4,11 @@ import { CurrencyConverterComponent } from './currency-converter.component';
 
 
 const routes: Routes = [
-  { path: '', component: CurrencyConverterComponent }
+  {
+    path: '',
+    component: CurrencyConverterComponent,
+    data: { title: 'Currency converter' }
+  }
 ];
 
 @NgModule({

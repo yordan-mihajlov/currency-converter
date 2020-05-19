@@ -4,7 +4,11 @@ import { CurrencyExchangeRateComponent } from './currency-exchange-rate.componen
 
 
 const routes: Routes = [
-  { path: '', component: CurrencyExchangeRateComponent }
+  {
+    path: '',
+    component: CurrencyExchangeRateComponent,
+    data: { title: 'Currency exchange rate' }
+  }
 ];
 
 @NgModule({
