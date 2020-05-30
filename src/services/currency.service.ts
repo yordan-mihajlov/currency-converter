@@ -11,7 +11,7 @@ export class CurrencyService {
 
   }
 
-  // getData(): Observable<any> {
-  //   return this.http.get('https://api.exchangeratesapi.io/latest?base=USD');
-  // }
+  getData(): Observable<any> {
+    return this.http.get('https://api.exchangeratesapi.io/latest?base=USD');
+  }
 }
