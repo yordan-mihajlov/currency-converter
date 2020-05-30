@@ -8,6 +8,8 @@ import { CurrencyService } from 'src/services/currency.service';
 })
 export class CurrencyConverterComponent implements OnInit {
   test: string;
+  currencyMap: Map<any, any>;
+  currencyArray: Array<any>;
 
   constructor(private _currencyService: CurrencyService) {
 
@@ -17,10 +19,15 @@ export class CurrencyConverterComponent implements OnInit {
     this.test = this._currencyService.test;
 
     this._currencyService.getData().subscribe((data: any) => {
-      console.log(data);
-      const bar = Array.from(Object.entries(data.rates));
-      const mapche = new Map(bar);
-      console.log(new Map(bar));
+      // console.log(data);
+      const arr = Array.from(Object.entries(data.rates));
+      const map = new Map<any, any>(arr);
+      console.log(arr);
+      console.log(map);
+      this.currencyMap = map;
+      this.currencyArray = arr;
     });
+
+
   }
 }
