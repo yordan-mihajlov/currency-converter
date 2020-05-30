@@ -1,6 +1,16 @@
-<p>currency-converter works!</p>
-
-Currency map:
-<div *ngFor="let entry of currencyArray">
-    {{ entry[0] }} : {{ entry[1] }}
-</div>
+<mat-form-field>
+    <mat-label>From:</mat-label>
+    <div matPrefix class="from-field-prefix">
+        <ng-container *ngIf="select && select.value">
+            <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(select.value.name)"></span>
+        </ng-container>
+    </div>
+    <mat-select #select [value]="selectedFromCurrency">
+        <mat-option *ngFor="let currency of currencies" [value]="currency">
+            <div class="currency-option-content">
+                <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(currency.name)"></span>
+                <span>{{ currency.name }}</span>
+            </div>
+        </mat-option>
+    </mat-select>
+</mat-form-field>
