@@ -1,4 +1,17 @@
-.from-field-prefix {
+.select-wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 16px 8px;
+}
+
+.form-field {
+    width: 45%;
+    min-width: 220px;
+}
+
+.field-prefix {
     margin-right: 8px;
 }
 
@@ -9,5 +22,77 @@
 
     .currency-flag {
         margin-right: 16px;
+    }
+}
+
+.amount-wrapper {
+    padding: 16px;
+    margin-bottom: 24px;
+
+    .amount-input {
+        font: 400 48px Roboto, "Helvetica Neue";
+        display: flex;
+        box-sizing: border-box;
+        font-family: sans-serif;
+        font-size: 48px;
+        padding: 2px 4px;
+        border: none;
+        border-bottom: 1px solid grey;
+        background-color: rgba(0, 0, 0, 0.02);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        min-width: 0;
+        flex-grow: 1;
+    }
+}
+
+.exchange-rate-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    padding: 16px;
+    margin-bottom: 24px;
+
+    h1 {
+        margin: unset;
+        margin-right: 8px;
+    }
+
+    span {
+        font: 400 24px Roboto, "Helvetica Neue";
+        font-weight: bold;
+    }
+}
+
+.result-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    margin-bottom: 24px;
+
+    .result {
+        border: none;
+        background-color: rgba(0, 0, 0, 0.02);
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+        font: 400 48px Roboto, "Helvetica Neue";
+        box-sizing: border-box;
+        padding: 2px 4px;
+        min-width: 0;
+        flex-grow: 1;
+        overflow: hidden;
+    }
+}
+
+.number-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .prefix-flag {
+        display: flex;
+        flex-shrink: 0;
+        margin-right: 8px;
     }
 }

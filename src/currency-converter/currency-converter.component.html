@@ -1,16 +1,60 @@
-<mat-form-field>
-    <mat-label>From:</mat-label>
-    <div matPrefix class="from-field-prefix">
-        <ng-container *ngIf="select && select.value">
-            <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(select.value.name)"></span>
-        </ng-container>
+<div class="select-wrapper">
+    <!-- "From" select component  -->
+    <mat-form-field class="form-field">
+        <mat-label>From:</mat-label>
+        <div matPrefix class="field-prefix">
+            <ng-container *ngIf="fromSelect && fromSelect.value">
+                <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(fromSelect.value.name)"></span>
+            </ng-container>
+        </div>
+        <mat-select #fromSelect [(value)]="selectedFromCurrency" (selectionChange)="fromSelectionChange($event)">
+            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                <div class="currency-option-content">
+                    <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(currency.name)"></span>
+                    <span>{{ currency.name }}</span>
+                </div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!-- "To" select component  -->
+    <mat-form-field class="form-field">
+        <mat-label>To:</mat-label>
+        <div matPrefix class="field-prefix">
+            <ng-container *ngIf="toSelect && toSelect.value">
+                <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(toSelect.value.name)"></span>
+            </ng-container>
+        </div>
+        <mat-select #toSelect [(value)]="selectedToCurrency" (selectionChange)="toSelectionChange($event)">
+            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                <div class="currency-option-content">
+                    <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(currency.name)"></span>
+                    <span>{{ currency.name }}</span>
+                </div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div class="amount-wrapper">
+    <h1>Amount</h1>
+    <div class="number-container">
+        <span *ngIf="fromSelect.value" class="currency-flag currency-flag-xl prefix-flag" [ngClass]="getFlagClass(fromSelect.value.name)"></span>
+        <input class="amount-input" type="text" inputmode="decimal" [textMask]="mask" [(ngModel)]="value" />
     </div>
-    <mat-select #select [value]="selectedFromCurrency">
-        <mat-option *ngFor="let currency of currencies" [value]="currency">
-            <div class="currency-option-content">
-                <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(currency.name)"></span>
-                <span>{{ currency.name }}</span>
-            </div>
-        </mat-option>
-    </mat-select>
-</mat-form-field>
+</div>
+<div class="exchange-rate-wrapper" *ngIf="exchangeRate">
+    <h1>Exchange rate: </h1>
+    <span>
+        {{ exchangeRate.rate }}
+    </span>
+</div>
+<div class="result-wrapper" *ngIf="exchangeRate">
+    <h1>Result</h1>
+    <div class="number-container">
+        <span *ngIf="toSelect.value" class="currency-flag currency-flag-xl prefix-flag" [ngClass]="getFlagClass(toSelect.value.name)"></span>
+        <div class="result">
+            {{ result }}
+        </div>
+    </div>
+</div>

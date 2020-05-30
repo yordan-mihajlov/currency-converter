@@ -5,7 +5,8 @@ import { CurrencyCoverterRoutingModule } from './currency-converter-routing.modu
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
+import { FormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
 
 
 @NgModule({
@@ -13,9 +14,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   imports: [
     CommonModule,
     CurrencyCoverterRoutingModule,
+    TextMaskModule,
     MatSelectModule,
     MatOptionModule,
     MatFormFieldModule,
+    FormsModule
   ]
 })
 export class CurrencyConverterModule { }

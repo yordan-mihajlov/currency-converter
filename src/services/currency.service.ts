@@ -33,11 +33,11 @@ export class CurrencyService {
 }
 
 
-class ExchangeRate {
+export class ExchangeRate {
   /** We multiply the FROM currency by the TO currency with the RATE. */
   constructor(public from: string, public to: string, public date: string, public rate: any) { }
 }
 
-class ExchangeRateAll {
+export class ExchangeRateAll {
   constructor(public from: string, public date: string, public rates: Array<any>) { }
 }
