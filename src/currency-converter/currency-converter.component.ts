@@ -18,15 +18,15 @@ export class CurrencyConverterComponent implements OnInit {
   ngOnInit(): void {
     this.test = this._currencyService.test;
 
-    this._currencyService.getData().subscribe((data: any) => {
-      // console.log(data);
-      const arr = Array.from(Object.entries(data.rates));
-      const map = new Map<any, any>(arr);
-      console.log(arr);
-      console.log(map);
-      this.currencyMap = map;
-      this.currencyArray = arr;
-    });
+    // this._currencyService.getData().subscribe((data: any) => {
+    //   // console.log(data);
+    //   const arr = Array.from(Object.entries(data.rates));
+    //   const map = new Map<any, any>(arr);
+    //   console.log(arr);
+    //   console.log(map);
+    //   this.currencyMap = map;
+    //   this.currencyArray = arr;
+    // });
 
 
   }
