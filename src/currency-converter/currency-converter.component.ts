@@ -48,7 +48,9 @@ export class CurrencyConverterComponent {
   constructor(private _currencyService: CurrencyService, private _cdr: ChangeDetectorRef) {
     this._currencyService.getExchangeRateAll(this.fromCurrencyName).pipe(take(1)).subscribe((data: any) => {
       const dataArray = Array.from(Object.entries(data.rates));
-      const currArray: Array<Currency> = dataArray.map((x: Array<any>) => new Currency(x[0]));
+      const currArray: Array<Currency> = dataArray
+        .map((x: Array<any>) => new Currency(x[0]))
+        .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
       this.currencies = currArray;
 
       const bgnCurrency = this.currencies.find(c => c.name.toLowerCase() === 'bgn');
@@ -56,11 +58,20 @@ export class CurrencyConverterComponent {
       this.selectedFromCurrency = bgnCurrency ? bgnCurrency : this.currencies[0];
       this.selectedToCurrency = eurCurrency ? eurCurrency : this.currencies[0];
       this._cdr.detectChanges();
-    });
+    },
+      (error: any) => {
+        this.errorHandler(error);
+      }
+    );
 
-    this._currencyService.getExchangeRateBetween(this.fromCurrencyName, this.toCurrencyName).pipe(take(1)).subscribe((data: any) => {
-      this.exchangeRate = data as ExchangeRate;
-    });
+    this._currencyService.getExchangeRateBetween(this.fromCurrencyName, this.toCurrencyName).pipe(take(1)).subscribe(
+      (data: any) => {
+        this.exchangeRate = data as ExchangeRate;
+      },
+      (error: any) => {
+        this.errorHandler(error);
+      }
+    );
   }
 
   getFlagClass(currency: string): string {
@@ -68,16 +79,30 @@ export class CurrencyConverterComponent {
   }
 
   fromSelectionChange(event: MatSelectChange) {
-    this._currencyService.getExchangeRateBetween(event.value.name, this.selectedToCurrency.name.toLowerCase()).pipe(take(1)).subscribe((data: any) => {
-      this.exchangeRate = data as ExchangeRate;
-
-    });
+    this._currencyService.getExchangeRateBetween(event.value.name, this.selectedToCurrency.name.toLowerCase()).pipe(take(1)).subscribe(
+      (data: any) => {
+        this.exchangeRate = data as ExchangeRate;
+      },
+      (error: any) => {
+        this.errorHandler(error);
+      }
+    );
   }
 
   toSelectionChange(event: MatSelectChange) {
-    this._currencyService.getExchangeRateBetween(this.selectedFromCurrency.name.toLowerCase(), event.value.name).pipe(take(1)).subscribe((data: any) => {
-      this.exchangeRate = data as ExchangeRate;
-    });
+    this._currencyService.getExchangeRateBetween(this.selectedFromCurrency.name.toLowerCase(), event.value.name).pipe(take(1)).subscribe(
+      (data: any) => {
+        this.exchangeRate = data as ExchangeRate;
+      },
+      (error: any) => {
+        this.errorHandler(error);
+      }
+
+    );
+  }
+
+  errorHandler(error): void {
+    console.log('ERROR BE BATE');
   }
 }
 

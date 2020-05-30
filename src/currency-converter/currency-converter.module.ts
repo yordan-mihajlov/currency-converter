@@ -5,6 +5,7 @@ import { CurrencyCoverterRoutingModule } from './currency-converter-routing.modu
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 
@@ -18,6 +19,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatSelectModule,
     MatOptionModule,
     MatFormFieldModule,
+    MatCardModule,
     FormsModule
   ]
 })

@@ -36,25 +36,51 @@
     </mat-form-field>
 </div>
 
-<div class="amount-wrapper">
-    <h1>Amount</h1>
-    <div class="number-container">
-        <span *ngIf="fromSelect.value" class="currency-flag currency-flag-xl prefix-flag" [ngClass]="getFlagClass(fromSelect.value.name)"></span>
-        <input class="amount-input" type="text" inputmode="decimal" [textMask]="mask" [(ngModel)]="value" />
-    </div>
-</div>
 <div class="exchange-rate-wrapper" *ngIf="exchangeRate">
     <h1>Exchange rate: </h1>
     <span>
         {{ exchangeRate.rate }}
     </span>
 </div>
+
+<mat-card class="card">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <span *ngIf="fromSelect.value" class="currency-flag currency-flag-xl prefix-flag"
+                [ngClass]="getFlagClass(fromSelect.value.name)"></span>
+        </div>
+        <mat-card-title>Amount</mat-card-title>
+        <mat-card-subtitle>The amount to be converted</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="amount-wrapper">
+            <input class="amount-input" type="text" inputmode="decimal" [textMask]="mask" [(ngModel)]="value" />
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="card result-card" *ngIf="exchangeRate">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <span *ngIf="toSelect.value" class="currency-flag currency-flag-xl prefix-flag"
+            [ngClass]="getFlagClass(toSelect.value.name)"></span>
+        </div>
+        <mat-card-title>Result</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="result">
+            {{ result }}
+        </div>
+    </mat-card-content>
+</mat-card>
+<!-- 
 <div class="result-wrapper" *ngIf="exchangeRate">
     <h1>Result</h1>
     <div class="number-container">
-        <span *ngIf="toSelect.value" class="currency-flag currency-flag-xl prefix-flag" [ngClass]="getFlagClass(toSelect.value.name)"></span>
+        <span *ngIf="toSelect.value" class="currency-flag currency-flag-xl prefix-flag"
+            [ngClass]="getFlagClass(toSelect.value.name)"></span>
         <div class="result">
             {{ result }}
         </div>
     </div>
-</div>
+</div> -->
