@@ -4,6 +4,7 @@ import { TextMaskConfig } from 'angular2-text-mask';
 import { createNumberMask } from 'text-mask-addons';
 import { take } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-currency-converter',
@@ -16,6 +17,10 @@ export class CurrencyConverterComponent {
   selectedFromCurrency: Currency;
   selectedToCurrency: Currency;
   value: number = 1;
+
+  // Error members
+  hasError = false;
+  errorMessage = '';
 
   get mask(): TextMaskConfig {
     return {
@@ -47,6 +52,8 @@ export class CurrencyConverterComponent {
 
   constructor(private _currencyService: CurrencyService, private _cdr: ChangeDetectorRef) {
     this._currencyService.getExchangeRateAll(this.fromCurrencyName).pipe(take(1)).subscribe((data: any) => {
+      this.hasError = false;
+
       const dataArray = Array.from(Object.entries(data.rates));
       const currArray: Array<Currency> = dataArray
         .map((x: Array<any>) => new Currency(x[0]))
@@ -59,18 +66,14 @@ export class CurrencyConverterComponent {
       this.selectedToCurrency = eurCurrency ? eurCurrency : this.currencies[0];
       this._cdr.detectChanges();
     },
-      (error: any) => {
+      (error: HttpErrorResponse) => {
         this.errorHandler(error);
       }
     );
 
     this._currencyService.getExchangeRateBetween(this.fromCurrencyName, this.toCurrencyName).pipe(take(1)).subscribe(
-      (data: any) => {
-        this.exchangeRate = data as ExchangeRate;
-      },
-      (error: any) => {
-        this.errorHandler(error);
-      }
+      (data: any) => { this.successExchangeRateBetween(data); },
+      (error: HttpErrorResponse) => { this.errorHandler(error); }
     );
   }
 
@@ -80,29 +83,26 @@ export class CurrencyConverterComponent {
 
   fromSelectionChange(event: MatSelectChange) {
     this._currencyService.getExchangeRateBetween(event.value.name, this.selectedToCurrency.name.toLowerCase()).pipe(take(1)).subscribe(
-      (data: any) => {
-        this.exchangeRate = data as ExchangeRate;
-      },
-      (error: any) => {
-        this.errorHandler(error);
-      }
+      (data: any) => { this.successExchangeRateBetween(data); },
+      (error: HttpErrorResponse) => { this.errorHandler(error); }
     );
   }
 
   toSelectionChange(event: MatSelectChange) {
     this._currencyService.getExchangeRateBetween(this.selectedFromCurrency.name.toLowerCase(), event.value.name).pipe(take(1)).subscribe(
-      (data: any) => {
-        this.exchangeRate = data as ExchangeRate;
-      },
-      (error: any) => {
-        this.errorHandler(error);
-      }
-
+      (data: any) => { this.successExchangeRateBetween(data); },
+      (error: HttpErrorResponse) => { this.errorHandler(error); }
     );
   }
 
-  errorHandler(error): void {
-    console.log('ERROR BE BATE');
+  private successExchangeRateBetween(data: ExchangeRate): void {
+    this.hasError = false;
+    this.exchangeRate = data;
+  }
+
+  private errorHandler(error: HttpErrorResponse): void {
+    this.hasError = true;
+    this.errorMessage = error.message;
   }
 }
 
