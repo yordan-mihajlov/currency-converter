@@ -5,6 +5,7 @@ import { createNumberMask } from 'text-mask-addons';
 import { take } from 'rxjs/operators';
 import { MatSelectChange } from '@angular/material/select';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Currency } from '../app/currency';
 
 @Component({
   selector: 'app-currency-converter',
@@ -106,6 +107,3 @@ export class CurrencyConverterComponent {
   }
 }
 
-class Currency {
-  constructor(public name: string) { }
-}

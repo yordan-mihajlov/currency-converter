@@ -1,1 +1,47 @@
-<p>currency-exchange-rate works!</p>
+<div class="from-wrapper">
+    <mat-form-field class="form-field">
+        <mat-label>From:</mat-label>
+        <div matPrefix class="field-prefix">
+            <ng-container *ngIf="fromSelect && fromSelect.value">
+                <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(fromSelect.value.name)"></span>
+            </ng-container>
+        </div>
+        <mat-select #fromSelect [(value)]="selectedFromCurrency" (selectionChange)="fromSelectionChange($event)">
+            <mat-option *ngFor="let currency of currencies" [value]="currency">
+                <div class="currency-option-content">
+                    <span class="currency-flag currency-flag-lg" [ngClass]="getFlagClass(currency.name)"></span>
+                    <span>{{ currency.name }}</span>
+                </div>
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<!-- Rated currencies list -->
+<div class="rated-currencies-container" *ngIf="!hasError">
+    <mat-label class="to-label">To:</mat-label>
+    <mat-card class="card" *ngFor="let ratedCurrency of ratedCurrencies">
+        <mat-card-header>
+            <div mat-card-avatar>
+                <span *ngIf="fromSelect.value" class="currency-flag currency-flag-lg prefix-flag"
+                    [ngClass]="getFlagClass(ratedCurrency.name)"></span>
+            </div>
+            <mat-card-title>
+                {{ ratedCurrency.name }}
+                <span class="card-rate">
+                    {{ ratedCurrency.rate }}
+                </span>
+            </mat-card-title>
+        </mat-card-header>
+    </mat-card>
+</div>
+
+<!-- Error card -->
+<mat-card class="card" *ngIf="hasError">
+    <mat-card-header>
+        <mat-card-title>Error</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        {{ errorMessage }}
+    </mat-card-content>
+</mat-card>

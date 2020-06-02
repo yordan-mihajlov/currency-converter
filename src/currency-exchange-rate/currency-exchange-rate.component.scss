@@ -1,0 +1,43 @@
+.from-wrapper {
+    margin: 24px;
+}
+
+.form-field {
+    width: 100%;
+    min-width: 220px;
+}
+
+.field-prefix {
+    margin-right: 8px;
+}
+
+.currency-option-content {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    .currency-flag {
+        margin-right: 16px;
+    }
+}
+
+.rated-currencies-container {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 24px;
+
+    .to-label {
+        color: rgba(0,0,0,.6);
+        margin-bottom: 4px;
+    }
+}
+
+.card {
+    background-color: rgba(0,0,0,.01);
+}
+
+.card-rate {
+    font-weight: normal;
+    margin-left: 16px;
+    color: rgba(0,0,0,0.64);
+}

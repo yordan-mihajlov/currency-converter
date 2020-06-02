@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Currency, RatedCurrency } from '../app/currency';
+import { CurrencyService } from 'src/services/currency.service';
+import { take } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-currency-exchange-rate',
@@ -6,10 +11,68 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./currency-exchange-rate.component.scss']
 })
 export class CurrencyExchangeRateComponent implements OnInit {
+  currencies: Array<Currency>;
+  ratedCurrencies: Array<RatedCurrency>;
+  selectedFromCurrency: Currency;
 
-  constructor() { }
+  // Error members
+  hasError = false;
+  errorMessage = '';
 
-  ngOnInit(): void {
+  get fromCurrencyName(): string {
+    return this.selectedFromCurrency ? this.selectedFromCurrency.name.toLowerCase() : 'bgn';
   }
 
+  constructor(private _currencyService: CurrencyService, private _cdr: ChangeDetectorRef) {
+    this._currencyService.getExchangeRateAll(this.fromCurrencyName).pipe(take(1)).subscribe((data: any) => {
+      this.hasError = false;
+
+      const dataArray = Array.from(Object.entries(data.rates));
+      const currArray: Array<Currency> = dataArray
+        .map((x: Array<any>) => new Currency(x[0]))
+        .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+      this.currencies = currArray;
+
+      const bgnCurrency = this.currencies.find(c => c.name.toLowerCase() === 'bgn');
+      this.selectedFromCurrency = bgnCurrency ? bgnCurrency : this.currencies[0];
+      this._cdr.detectChanges();
+    },
+      (error: HttpErrorResponse) => {
+        this.errorHandler(error);
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.refresRatedCurrencies();
+  }
+
+  fromSelectionChange(event: MatSelectChange) {
+    this.refresRatedCurrencies();
+  }
+
+  getFlagClass(currency: string): string {
+    return `currency-flag-${currency.toLowerCase()}`;
+  }
+
+  private refresRatedCurrencies(): void {
+    this._currencyService.getExchangeRateAll(this.fromCurrencyName).pipe(take(1)).subscribe((data: any) => {
+      this.hasError = false;
+
+      const dataArray = Array.from(Object.entries(data.rates));
+      const currArray: Array<RatedCurrency> = dataArray
+        .map((x: Array<any>) => new RatedCurrency(x[0], x[1]))
+        .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0));
+      this.ratedCurrencies = currArray;
+    },
+      (error: HttpErrorResponse) => {
+        this.errorHandler(error);
+      }
+    );
+  }
+
+  private errorHandler(error: HttpErrorResponse): void {
+    this.hasError = true;
+    this.errorMessage = error.message;
+  }
 }
