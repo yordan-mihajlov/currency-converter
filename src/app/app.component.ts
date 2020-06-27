@@ -1,7 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Router, ActivationEnd } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,10 @@ export class AppComponent implements OnDestroy {
 
   title: string;
 
-  constructor(private router: Router) {
+  @ViewChild('dialogTemplate', { static: false })
+  dialogTemplate: TemplateRef<any>;
+
+  constructor(private router: Router, public dialog: MatDialog) {
     this.router.events.pipe(
       filter(event => event instanceof ActivationEnd),
       takeUntil(this._destroyed)
@@ -27,5 +31,9 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy(): void {
     this._destroyed.next();
     this._destroyed.complete();
+  }
+
+  openDialog() {
+    this.dialog.open(this.dialogTemplate);
   }
 }

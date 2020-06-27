@@ -2,18 +2,10 @@
     <!-- Header -->
     <mat-toolbar color="primary">
         <mat-toolbar-row>
-            <!-- <button mat-icon-button>
-                <mat-icon>menu</mat-icon>
-            </button> -->
-            <!-- <mat-icon>attach_money</mat-icon> -->
-            <!-- <span>{{ title }}</span> -->
             $kaikru converter
             <span class="example-spacer"></span>
-            <button mat-icon-button>
-                <mat-icon class="example-icon">favorite</mat-icon>
-            </button>
-            <button mat-icon-button>
-                <mat-icon class="example-icon">delete</mat-icon>
+            <button mat-icon-button (click)="openDialog()">
+                <mat-icon class="example-icon">info</mat-icon>
             </button>
         </mat-toolbar-row>
     </mat-toolbar>
@@ -34,3 +26,24 @@
         <router-outlet></router-outlet>
     </main>
 </div>
+
+<ng-template #dialogTemplate>
+    <h1 mat-dialog-title>
+        Skaikru converter
+    </h1>
+    <div mat-dialog-content>
+        <div>This application is a project for the:</div>
+        <div>Sofia University "St. Kliment Ohridski" Faculty of mathematics and informatics</div>
+        <div class="margin-top">
+            <span class="heading">Subject: </span>
+            <span>Mobile applications 2020</span>
+        </div>
+        <div>
+            <span class="heading">Authors: </span>
+            <span>Tacho Zhelev, Yordan Mihaylov</span>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close>Close</button>
+    </div>
+</ng-template>
